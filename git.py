@@ -18,11 +18,18 @@ class Git:
     def push(self):
         os.system('git push')
 
+    def add(self, param: str):
+        os.system(f'git add {param}')
+
     def commit(self, message: str):
-        os.system('git add . && git commit -m "' + message + '"')
+        self.add('-all')
+        os.system(f'git commit -m "{message}"')
 
     def checkout(self, branch: str, check_new_branch: bool=True):
         option = ''
+        print('Branches atuais:\n{}'.format(
+            self.branch()
+        ), '-'*50)
         if check_new_branch and branch not in self.branch():
             option = '-b'
         command = 'git checkout {option} {branch}'.format(
