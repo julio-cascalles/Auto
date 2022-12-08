@@ -1,29 +1,30 @@
-import os
+from terminal import Terminal
+
 
 URL_GITHUB = 'https://github.com/{repo}/{path}.git'
 
 
-class Git:
+class Git(Terminal):
     def __init__(self, path: str, repo: str=''):
-        if not os.path.exists(path): 
+        if not self.path.exists(path): 
             self.clone(URL_GITHUB.format(repo=repo, path=path))
-        os.chdir(path)
+        self.chdir(path)
 
     def clone(self, url: str):
-        os.system('git clone ' + url)
+        self.system('git clone ' + url)
 
     def pull(self):
-        os.system('git pull')
+        self.system('git pull')
 
     def push(self):
-        os.system('git push')
+        self.system('git push')
 
     def add(self, param: str):
-        os.system(f'git add {param}')
+        self.system(f'git add {param}')
 
     def commit(self, message: str):
         self.add('-all')
-        os.system(f'git commit -m "{message}"')
+        self.system(f'git commit -m "{message}"')
 
     def checkout(self, branch: str, check_new_branch: bool=True):
         option = ''
@@ -36,14 +37,14 @@ class Git:
             option=option,
             branch=branch
         )
-        os.system(command)
+        self.system(command)
 
     def branch(self):
-        return os.popen('git branch').read().split('\n')
+        return self.popen('git branch').read().split('\n')
 
     def diff(self, extension='.py') -> dict:
         result = {}
-        for line in os.popen('git diff').read().split('\n'):
+        for line in self.popen('git diff').read().split('\n'):
             if line.endswith(extension):
                 file_name = line.split('/')[-1]
             elif line and line[0] in '+-':

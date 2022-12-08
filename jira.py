@@ -27,7 +27,7 @@ class Jira:
         ).json()
         # -------------------------------
         self.issues = [
-            Issue(x['key'], **x['fields']) 
+            Issue(x['key'], self, **x['fields']) 
             for x in data.get('issues', [])
         ]
 
