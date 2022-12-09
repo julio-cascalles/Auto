@@ -18,7 +18,7 @@ def execute(project: str, env: str='', flag: str='') -> str:
     task = jira.issues[0]
     conda = Conda(env or project)
     git = Git(env or project, company_name)
-    git.checkout(task.key, check_new_branch=True)
+    git.checkout(task.key, check_branch=True)
     if flag == 'start':
         task.assign_to_me()
         task.start()

@@ -6,9 +6,10 @@ URL_GITHUB = 'https://github.com/{repo}/{path}.git'
 
 class Git(Terminal):
     def __init__(self, path: str, repo: str=''):
-        if not self.path.exists(path): 
+        if not self.exists(path): 
             self.clone(URL_GITHUB.format(repo=repo, path=path))
         self.chdir(path)
+        self.new_branch = ''
 
     def clone(self, url: str):
         self.system('git clone ' + url)
@@ -17,22 +18,23 @@ class Git(Terminal):
         self.system('git pull')
 
     def push(self):
-        self.system('git push')
+        option = ''
+        if self.new_branch:
+            option = f' --set-upstream origin {self.new_branch}'
+        self.system('git push'+option)
 
     def add(self, param: str):
         self.system(f'git add {param}')
 
     def commit(self, message: str):
-        self.add('-all')
+        self.add('--all')
         self.system(f'git commit -m "{message}"')
 
-    def checkout(self, branch: str, check_new_branch: bool=True):
+    def checkout(self, branch: str, check_branch: bool=True):
         option = ''
-        print('Branches atuais:\n{}'.format(
-            self.branch()
-        ), '-'*50)
-        if check_new_branch and branch not in self.branch():
+        if check_branch and branch not in self.branch():
             option = '-b'
+            self.new_branch = branch
         command = 'git checkout {option} {branch}'.format(
             option=option,
             branch=branch
@@ -40,11 +42,14 @@ class Git(Terminal):
         self.system(command)
 
     def branch(self):
-        return self.popen('git branch').read().split('\n')
+        return [
+            b.replace('*', '').strip()
+            for b in self.popen('git branch') if b
+        ]
 
     def diff(self, extension='.py') -> dict:
         result = {}
-        for line in self.popen('git diff').read().split('\n'):
+        for line in self.popen('git diff'):
             if line.endswith(extension):
                 file_name = line.split('/')[-1]
             elif line and line[0] in '+-':

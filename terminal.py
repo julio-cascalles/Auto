@@ -11,3 +11,9 @@ class Terminal:
 
     def chdir(self, path: str):
         os.chdir(path)
+
+    def isfile(self, filename: str) -> bool:
+        return os.path.isfile(filename)
+
+    def exists(self, path: str) -> bool:
+        return os.path.exists(path)
