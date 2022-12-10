@@ -26,8 +26,9 @@ class Git(Terminal):
     def add(self, param: str):
         self.system(f'git add {param}')
 
-    def commit(self, message: str):
-        self.add('--all')
+    def commit(self, message: str, add_all: bool = True):
+        if add_all:
+            self.add('--all')
         self.system(f'git commit -m "{message}"')
 
     def checkout(self, branch: str, check_branch: bool=True):
