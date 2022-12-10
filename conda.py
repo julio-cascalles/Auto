@@ -18,7 +18,7 @@ class Conda(Terminal):
         self.system('conda deactivate')
 
     def create(self, env: str):
-        if self.isfile(env):
+        if self.exists(env):
             self.system('conda env create -f ' + env)
         else:
             self.system('conda create -n ' + env)
