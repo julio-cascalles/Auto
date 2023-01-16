@@ -1,11 +1,11 @@
 import sys
-from pipeline import execute
+from pipeline import execute, DESCR_OPTIONS
 
 
 print('AUTO'.center(50, '-'))
-print('-' * 50)
 if len(sys.argv) < 3:
-    print('Usage: python3 AUTO <project> <env> [start/end]')
+    print('Usage: python3 AUTO -p <project> [-e <env>] [-f start|end]')
+    print(DESCR_OPTIONS)
 else:
-    params = [a for i, a in enumerate(sys.argv) if i > 0]
-    print(execute(*params))
+    print(execute(sys.argv))
+print('-' * 50)

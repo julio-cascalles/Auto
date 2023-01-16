@@ -2,7 +2,9 @@ from terminal import Terminal
 
 
 class Conda(Terminal):
-    def __init__(self, env: str):
+    def __init__(self, env: str=''):
+        if not env:
+            return
         if env not in self.env_list():
             self.create(env)
         self.activate(env)
