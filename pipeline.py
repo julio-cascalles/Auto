@@ -17,9 +17,9 @@ SEL_FIRST = lambda jira: jira.issues[0]
 
 def execute(params: list, select: callable=SEL_FIRST) -> str:
     args = {k: v for k, v in zip(params, params[1:]) if k.startswith('-')}
-    project = args['-p']
-    env_name = args.get('-e', project)
-    flag = args.get('-f')
+    project = args[OP_PROJECT]
+    env_name = args.get(OP_ENVIRON, project)
+    flag = args.get(OP_FLAG_ST)
     jira = Jira(
         url=os.environ['JIRA_URL'],
         user=os.environ['JIRA_USERNAME'],
