@@ -19,7 +19,7 @@ class Jira:
                 ' AND '.join(
                     f'{k} = {v}'
                     for k, v in args.items()
-                    if k not in JIRA_PROPERTIES
+                    if v and k not in JIRA_PROPERTIES
                 ),
                 'ORDER BY priority, created',
             )},

@@ -24,6 +24,7 @@ def execute(params: list, select: callable=SEL_FIRST) -> str:
         url=os.environ['JIRA_URL'],
         user=os.environ['JIRA_USERNAME'],
         token=os.environ['JIRA_TOKEN'],
+        assignee=None if flag == 'start' else 'currentUser()',
         project=project,
         status='"To Do"' if flag == 'start' else '"In Progress"'
     )
