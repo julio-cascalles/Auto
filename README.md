@@ -26,7 +26,11 @@ Ao rodar a função **execute** da pipeline, acontecem as seguintes coisas:
 
 * É feita uma pesquisa no Jira com base em 
     - dados de acesso (usuário e token) armazenados nas _variáveis de ambiente_;
+    - status da tarefa;
+    - projeto;
+    - atribuição (quem está trabalhando na tarefa).
 * Das tarefas retornadas é selecionada uma com a função passada no parâmetro **select** da função _execute_;
+    - Se nenhuma função de escolha for passada no parâmetro, a primeira tarefa da lista será selecionada.
 * O ambiente é montado ou criado;
 * O repositório é baixado ou atualizado;
 * A tarefa é atualizada;
