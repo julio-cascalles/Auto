@@ -16,7 +16,7 @@ class Issue:
         self.project = args['project']['name']
         self.jira = jira
         
-    def __http_params(self, suffix, data=None):
+    def __http_params(self, suffix, data=None) -> dict:
         print(f'\tIssue {self.key}:', suffix, data)
         return dict(
             url='{}/rest/api/3/issue/{}/{}'.format(

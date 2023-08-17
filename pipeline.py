@@ -6,9 +6,8 @@ from conda import Conda
 OP_PROJECT = '-p'
 OP_ENVIRON = '-e'
 OP_FLAG_ST = '-f'
-
 SEL_FIRST = lambda jira: jira.issues[0]
-START_ID = 'start'
+START_ID, END_ID = 'start', 'end'
 
 
 def execute(args: dict, select: callable=SEL_FIRST) -> str:
@@ -33,7 +32,7 @@ def execute(args: dict, select: callable=SEL_FIRST) -> str:
         task.assign_to_me()
         task.start()
         git.pull()
-    elif flag == 'end':
+    elif flag == END_ID:
         task.end()
         git.commit(task.summary)
         git.push()
