@@ -6,11 +6,6 @@ from conda import Conda
 OP_PROJECT = '-p'
 OP_ENVIRON = '-e'
 OP_FLAG_ST = '-f'
-DESCR_OPTIONS = f"""
-    {OP_PROJECT} = Project
-    {OP_ENVIRON} = Environment
-    {OP_FLAG_ST} = Flag ("start" OR "stop")
-"""
 
 SEL_FIRST = lambda jira: jira.issues[0]
 START_ID = 'start'
