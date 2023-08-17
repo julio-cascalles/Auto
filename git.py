@@ -36,13 +36,10 @@ class Git(Terminal):
         if check_branch and branch not in self.branch():
             option = '-b'
             self.new_branch = branch
-        command = 'git checkout {option} {branch}'.format(
-            option=option,
-            branch=branch
-        )
+        command = f'git checkout {option} {branch}'
         self.system(command)
 
-    def branch(self):
+    def branch(self) -> list:
         return [
             b.replace('*', '').strip()
             for b in self.popen('git branch') if b

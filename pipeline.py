@@ -15,8 +15,7 @@ DESCR_OPTIONS = f"""
 SEL_FIRST = lambda jira: jira.issues[0]
 
 
-def execute(params: list, select: callable=SEL_FIRST) -> str:
-    args = {k: v for k, v in zip(params, params[1:]) if k.startswith('-')}
+def execute(args: dict, select: callable=SEL_FIRST) -> str:
     project = args[OP_PROJECT]
     env_name = args.get(OP_ENVIRON, project)
     flag = args.get(OP_FLAG_ST)
