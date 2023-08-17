@@ -13,6 +13,7 @@ DESCR_OPTIONS = f"""
 """
 
 SEL_FIRST = lambda jira: jira.issues[0]
+START_ID = 'start'
 
 
 def execute(args: dict, select: callable=SEL_FIRST) -> str:
@@ -23,9 +24,9 @@ def execute(args: dict, select: callable=SEL_FIRST) -> str:
         url=os.environ['JIRA_URL'],
         user=os.environ['JIRA_USERNAME'],
         token=os.environ['JIRA_TOKEN'],
-        assignee=None if flag == 'start' else 'currentUser()',
+        assignee=None if flag == START_ID else 'currentUser()',
         project=project,
-        status='"To Do"' if flag == 'start' else '"In Progress"'
+        status='"To Do"' if flag == START_ID else '"In Progress"'
     )
     if not jira.issues:
         return 'No issues found.'.rjust(50, '-')
@@ -33,7 +34,7 @@ def execute(args: dict, select: callable=SEL_FIRST) -> str:
     conda = Conda(env_name)
     git = Git(env_name, os.environ['COMPANY_NAME'])
     git.checkout(task.key, check_branch=True)
-    if flag == 'start':
+    if flag == START_ID:
         task.assign_to_me()
         task.start()
         git.pull()
