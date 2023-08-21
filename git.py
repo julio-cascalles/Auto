@@ -1,13 +1,16 @@
 from terminal import Terminal
 
-
 URL_GITHUB = 'https://github.com/{repo}/{path}.git'
+URL_GITLAB = 'https://gitlab-new.{repo}/{path}.git'
 
-
+ 
 class Git(Terminal):
+
+    BASE_URL = URL_GITHUB
+
     def __init__(self, path: str, repo: str=''):
-        if not self.exists(path): 
-            self.clone(URL_GITHUB.format(repo=repo, path=path))
+        if not self.exists(path):
+            self.clone(self.BASE_URL.format(repo=repo, path=path))
         self.chdir(path)
         self.new_branch = ''
 
